@@ -1,0 +1,6 @@
+#include <std>
+
+int main()
+{
+
+}
