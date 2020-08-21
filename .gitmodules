@@ -1,0 +1,9 @@
+[submodule "SDL2.framework"]
+	path = SDL2.framework
+	url = https://github.com/Dovran-Annakuliev/SDL2.framework.git
+[submodule "SDL2_image.framework"]
+	path = SDL2_image.framework
+	url = https://github.com/Dovran-Annakuliev/SDL2_image.framework.git
+[submodule "libft"]
+	path = libft
+	url = https://github.com/ltammie/libft.git
