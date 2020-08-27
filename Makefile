@@ -3,12 +3,9 @@ NAME = wolf3d
 SRC_DIR = sources/
 CONTROLLERS_DIR = $(SRC_DIR)controllers/
 SRCS = $(SRC_DIR)main.c\
-		$(SRC_DIR)cl_init.c\
+		$(SRC_DIR)data_init.c\
 		$(SRC_DIR)error.c\
-		$(SRC_DIR)init.c\
-		$(CONTROLLERS_DIR)controller.c\
-		$(CONTROLLERS_DIR)keyboard_controller.c\
-		$(CONTROLLERS_DIR)mouse_controller.c
+		$(SRC_DIR)read_arg.c
 
 INC = includes/
 OBJS = $(SRCS:.c=.o)
@@ -37,7 +34,7 @@ install:
 		cp -r SDL2.framework ~/Library/Frameworks/
 		cp -r SDL2_image.framework ~/Library/Frameworks/
 
-$(NAME): lib $(OBJS) $(INC)rtv1.h
+$(NAME): lib $(OBJS) $(INC)*.h
 		 $(GCC) $(OBJS) $(LIB) -o $(NAME)
 
 clean:
