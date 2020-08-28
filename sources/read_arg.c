@@ -24,7 +24,7 @@ static void	split(t_db *data, char *line, int i)
 	array = ft_strsplit(line, ' ');
 	while (array[++j])
 	{
-		if (ft_strcmp(array[j], "1"))
+		if (ft_strcmp(array[j], "1") == 0)
 			data->map.map[k].status = '1';
 		else if (ft_strcmp(array[j], "A") == 0)
 			data->map.map[k].status = 'A';
