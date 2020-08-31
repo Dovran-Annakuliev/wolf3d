@@ -13,22 +13,31 @@ static int	ft_strlen_split(char const *s, char c)
 	return (len);
 }
 
-static void	set_status(t_db *data, int k, char *status)
+static void	set_status(t_db *data, int k, char *status, int i, int j)
 {
+	data->map.map[k].status = '0';
 	if (ft_strcmp(status, "1") == 0)
-		data->map.map[k].status = '1';
-	else if (ft_strcmp(status, "A") == 0)
-		data->map.map[k].status = 'A';
-	else if (ft_strcmp(status, "E") == 0)
-		data->map.map[k].status = 'E';
-	else if (ft_strcmp(status, "P") == 0)
-		data->map.map[k].status = 'P';
-	else if (ft_strcmp(status, "W") == 0)
-		data->map.map[k].status = 'W';
-	else if (ft_strcmp(status, "M") == 0)
-		data->map.map[k].status = 'M';
+		data->map.map[k].wall = 1;
+	else if (ft_strcmp(status, "0") == 0)
+		data->map.map[k].wall = 0;
 	else
-		data->map.map[k].status = '0';
+	{
+		data->map.map[k].wall = 0;
+		if (ft_strcmp(status, "A") == 0)
+			data->map.map[k].status = 'A';
+		else if (ft_strcmp(status, "E") == 0)
+			data->map.map[k].status = 'E';
+		else if (ft_strcmp(status, "P") == 0)
+			data->map.map[k].status = 'P';
+		else if (ft_strcmp(status, "W") == 0)
+			data->map.map[k].status = 'W';
+		else if (ft_strcmp(status, "M") == 0)
+			data->map.map[k].status = 'M';
+		else
+			error(2);
+	}
+//	ft_printf("[%d][%d]:\tstatus = %c\t", i, j, data->map.map[k].status);
+//	ft_printf("wall = %d\n", data->map.map[k].wall);
 }
 
 static void	ft_split(t_db *data, char *line, int i)
@@ -42,7 +51,8 @@ static void	ft_split(t_db *data, char *line, int i)
 	array = ft_strsplit(line, ' ');
 	while (array[++j])
 	{
-		set_status(data, i, array[j]);
+//		ft_printf("%s ", array[j]);
+		set_status(data, k, array[j], i, j);
 		data->map.map[k].x = j;
 		data->map.map[k].y = i;
 		free(array[j]);

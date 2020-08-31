@@ -5,7 +5,8 @@ CONTROLLERS_DIR = $(SRC_DIR)controllers/
 SRCS = $(SRC_DIR)main.c\
 		$(SRC_DIR)data_init.c\
 		$(SRC_DIR)error.c\
-		$(SRC_DIR)read_arg.c
+		$(SRC_DIR)read_arg.c\
+		$(SRC_DIR)render.c
 
 INC = includes/
 OBJS = $(SRCS:.c=.o)
