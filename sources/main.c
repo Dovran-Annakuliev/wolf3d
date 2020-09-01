@@ -15,7 +15,7 @@ int main(int ac, char **av)
 	{
 		SDL_RenderClear(data->sdl.renderer);
 //		res = render(data->cl, data->width, data->height);
-		update_texture(data->sdl.texture, data->sdl.width, data->sdl.height);//, res);
+//		update_texture(data);//, res);
 		SDL_RenderCopy(data->sdl.renderer, data->sdl.texture, NULL, NULL);
 		SDL_RenderPresent(data->sdl.renderer);
 		while (SDL_PollEvent(&event))

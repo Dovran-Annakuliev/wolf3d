@@ -1,17 +1,60 @@
 #include "../includes/wolf3d.h"
 
-void 		update_texture(SDL_Texture *texture, int width, int height)//, int *r)
+void fill_cell(Uint32 *pixels, SDL_PixelFormat *format, t_cell cell, int width)
+{
+	int i;
+	int j;
+
+	i = cell.y - cell.fill;
+	while (i < cell.y + cell.fill)
+	{
+		j = cell.x - cell.fill;
+		while (j < cell.x + cell.fill)
+		{
+			pixels[i * width + j] = SDL_MapRGBA(format, 0, 0, 200, 0);
+			j++;
+		}
+		i++;
+	}
+}
+
+void 		update_texture(t_db *data)//, int *r)
 {
 	Uint32				*pixels;
-	int					pitch;
 	SDL_PixelFormat		*format;
+	int					pitch;
+	int i;
+	int j;
+	int x;
+	int y;
+	int k;
 
-	if (SDL_LockTexture(texture, NULL, (void**)&pixels, &pitch) != 0)
-		error(TEXTURE_LOCK_ERROR, SDL_GetError());
-	format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-	for (int i = 0; i < height * width ; ++i)
-			pixels[i] = SDL_MapRGBA(format, 255, 255, 255, 0);
-	SDL_UnlockTexture(texture);
+//	if (SDL_LockTexture(data->sdl.texture, NULL, (void**)&pixels, &pitch) != 0)
+//		error(TEXTURE_LOCK_ERROR, SDL_GetError());
+//	format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+	y = -1;
+	k = 0;
+	while (++y < data->map.heg)
+	{
+		x = -1;
+		while (++x < data->map.len)
+		{
+			if (data->map.cell[y * data->map.len + x].wall)
+			{
+				SDL_Rect rect;
+				rect.h = 64;
+				rect.w = 64;
+				rect.x = k % data->sdl.width;
+				rect.y = k / data->sdl.width;
+				SDL_SetRenderDrawColor(data->sdl.renderer, 150, 0, 0, 0);
+				SDL_RenderFillRect(data->sdl.renderer, &rect);
+			}
+			k += 64;
+			if (k > data->map.len * 64)
+				k += data->sdl.width;
+		}
+	}
+//	SDL_UnlockTexture(data->sdl.texture);
 }
 
 

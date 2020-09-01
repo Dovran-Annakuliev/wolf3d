@@ -1,5 +1,10 @@
 #include "../includes/wolf3d.h"
 
+void			create_lvl(t_db *data)
+{
+
+}
+
 void init_sdl(t_db *data)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) < 0 ? error(SDL_INIT_ERROR, SDL_GetError()) : 0;
@@ -19,8 +24,9 @@ t_db 	*data_init(char *source)//, t_db *data)
 	t_db *data;
 	if (!(data = (t_db*)malloc(sizeof(t_db))))
 		error(MALLOC_ERROR, NULL);
-	read_arg(source, data);
 	init_sdl(data);
+	read_arg(source, data);
+//	create_lvl(data);
 
 /*------------------------------DELETE ME----------------------------------*/
 	int i = -1;

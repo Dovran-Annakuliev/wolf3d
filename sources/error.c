@@ -1,6 +1,6 @@
 #include "../includes/wolf3d.h"
 
-void error(int er, char *message)
+void error(int er, const char *message)
 {
 	if (er == MALLOC_ERROR)
 		ft_printf("Malloc error\n");

@@ -23,6 +23,7 @@ typedef struct	s_point
 	int y;
 	int wall;
 	char status;
+	int fill;
 }				t_cell;
 
 typedef struct	s_map
@@ -36,8 +37,8 @@ typedef struct	s_plr
 {
 	int x;
 	int y;
-	int pov;
-	int fov;
+	float pov;
+	float fov;
 }				t_plr;
 
 typedef struct	s_sdl
@@ -61,13 +62,14 @@ typedef struct	s_db
 	t_cl	cl;
 }				t_db;
 
-void			error(int er, char *message);
+void			error(int er, const char *message);
 void 			close_wolf(t_db *data);
 
 t_db 			*data_init(char *source);//, t_db *data);
 void			read_arg(char *source, t_db *data);
+void			create_lvl(t_db *data);
 
-void 			update_texture(SDL_Texture *texture, int width, int height);//, int *r);
+void 			update_texture(t_db *data);
 int				*render(t_cl *cl, int w, int h);
 
 #endif

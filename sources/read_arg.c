@@ -15,6 +15,7 @@ static int	ft_strlen_split(char const *s, char c)
 
 static void	set_status(t_db *data, int k, char *status, int i, int j)
 {
+//	data->map.cell[k].fill = 32;
 	data->map.cell[k].status = '0';
 	if (ft_strcmp(status, "1") == 0)
 		data->map.cell[k].wall = 1;
