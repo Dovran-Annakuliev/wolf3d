@@ -34,10 +34,8 @@ static void	set_status(t_db *data, int k, char *status, int i, int j)
 		else if (ft_strcmp(status, "M") == 0)
 			data->map.map[k].status = 'M';
 		else
-			error(2);
+			error(INVALID_MAP, NULL);
 	}
-//	ft_printf("[%d][%d]:\tstatus = %c\t", i, j, data->map.map[k].status);
-//	ft_printf("wall = %d\n", data->map.map[k].wall);
 }
 
 static void	ft_split(t_db *data, char *line, int i)
@@ -68,7 +66,7 @@ static void	read_size(int fd, char *line, t_db *data)
 		if (!data->map.len)
 			data->map.len = ft_strlen_split(line, ' ');
 		if (data->map.len != ft_strlen_split(line, ' '))
-			error(2);
+			error(INVALID_MAP, NULL);
 		data->map.heg++;
 		free(line);
 	}
@@ -85,7 +83,7 @@ void		read_arg(char *source, t_db *data)
 	data->map.len = 0;
 	if (((fd = open(source, O_RDONLY)) < 0)
 		|| ((read(fd, line, 0)) < 0))
-		error(1);
+		error(INVALID_ARGUMENTS, NULL);
 	read_size(fd, line, data);
 	data->map.map = (t_point *)malloc(sizeof(t_point)
 			* data->map.heg * data->map.len);

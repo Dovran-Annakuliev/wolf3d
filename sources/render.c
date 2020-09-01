@@ -6,15 +6,11 @@ void 		update_texture(SDL_Texture *texture, int width, int height)//, int *r)
 	int					pitch;
 	SDL_PixelFormat		*format;
 
-	SDL_LockTexture(texture, NULL, (void**)&pixels, &pitch) != 0 ? error(4) : 0;
+	if (SDL_LockTexture(texture, NULL, (void**)&pixels, &pitch) != 0)
+		error(TEXTURE_LOCK_ERROR, SDL_GetError());
 	format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
 	for (int i = 0; i < height * width ; ++i)
-//	{
-//		if (r[i] == 0)
-//			pixels[i] = SDL_MapRGBA(format, 0, 0, 0, 0);
-//		else
 			pixels[i] = SDL_MapRGBA(format, 255, 255, 255, 0);
-//	}
 	SDL_UnlockTexture(texture);
 }
 

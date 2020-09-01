@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
-project(wolf3d C)
+project(wolf3d)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -framework OpenGL -framework AppKit -I ~/Library/Frameworks/SDL2.framework/Headers -F /Users/rfork/Library/Frameworks/ -framework SDL2 -I ~/Library/Frameworks/SDL2_image.framework/Headers -F /Users/rfork/Library/Frameworks/ -framework SDL2_image")
 
 include_directories(includes)
 include_directories(libft/includes)

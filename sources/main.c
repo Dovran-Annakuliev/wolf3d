@@ -8,15 +8,16 @@ int main(int ac, char **av)
 	int *res;
 
 	if (ac != 2)
-		error(1);
-	data_init(av[1], data);
+		error(INVALID_ARGUMENTS, NULL);
+	data = data_init(av[1]);//, data);
+	quit = 0;
 	while (quit != 1)
 	{
-		SDL_RenderClear(data->sld.renderer);
+		SDL_RenderClear(data->sdl.renderer);
 //		res = render(data->cl, data->width, data->height);
-		update_texture(data->sld.texture, data->sld.width, data->sld.height);//, res);
-		SDL_RenderCopy(data->sld.renderer, data->sld.texture, NULL, NULL);
-		SDL_RenderPresent(data->sld.renderer);
+		update_texture(data->sdl.texture, data->sdl.width, data->sdl.height);//, res);
+		SDL_RenderCopy(data->sdl.renderer, data->sdl.texture, NULL, NULL);
+		SDL_RenderPresent(data->sdl.renderer);
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
