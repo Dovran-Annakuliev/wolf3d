@@ -23,11 +23,11 @@ typedef struct	s_point
 	int y;
 	int wall;
 	char status;
-}				t_point;
+}				t_cell;
 
 typedef struct	s_map
 {
-	t_point	*map;
+	t_cell	*cell;
 	int		len;
 	int		heg;
 }				t_map;

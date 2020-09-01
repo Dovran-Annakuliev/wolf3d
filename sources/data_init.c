@@ -29,10 +29,10 @@ t_db 	*data_init(char *source)//, t_db *data)
 	{
 		int j = -1;
 		while (++j < data->map.len)
-			if (data->map.map[i * data->map.len + j].status != '0')
-				ft_printf("%c ", data->map.map[i * data->map.len + j].status);
+			if (data->map.cell[i * data->map.len + j].status != '0')
+				ft_printf("%c ", data->map.cell[i * data->map.len + j].status);
 			else
-				ft_printf("%d ", data->map.map[i * data->map.len + j].wall);
+				ft_printf("%d ", data->map.cell[i * data->map.len + j].wall);
 
 		ft_printf("\n");
 	}
