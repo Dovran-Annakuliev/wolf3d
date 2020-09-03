@@ -31,6 +31,7 @@ typedef struct	s_map
 	t_cell	*cell;
 	int		len;
 	int		heg;
+	int		rect;
 }				t_map;
 
 typedef struct	s_plr
@@ -52,7 +53,6 @@ typedef struct	s_sdl
 
 typedef struct	s_cl
 {
-
 } t_cl;
 
 typedef struct	s_db
@@ -60,6 +60,7 @@ typedef struct	s_db
 	t_map	map;
 	t_sdl	sdl;
 	t_cl	cl;
+	t_plr	player;
 }				t_db;
 
 void			error(int er, const char *message);
@@ -71,5 +72,19 @@ void			create_lvl(t_db *data);
 
 void 			update_texture(t_db *data);
 int				*render(t_cl *cl, int w, int h);
+void			player_present(t_db *data);
+SDL_Rect		create_rect(int h, int w, int x, int y);
+void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer);
+
+/*
+** ---controls---
+*/
+
+void					controller(SDL_Event *event, t_db *data);
+void					keyboard_controller(SDL_Event *event, t_db *data);
+void					mouse_controller(SDL_Event *event, t_db *data);
+
+//del
+void print_rect(SDL_Rect rect);
 
 #endif

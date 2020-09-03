@@ -1,8 +1,10 @@
 #include "../includes/wolf3d.h"
 
-void			create_lvl(t_db *data)
+void default_settings(t_db *data)
 {
-
+	data->map.rect = 64;
+	data->player.x = 1;
+	data->player.y = 1;
 }
 
 void init_sdl(t_db *data)
@@ -26,7 +28,7 @@ t_db 	*data_init(char *source)//, t_db *data)
 		error(MALLOC_ERROR, NULL);
 	init_sdl(data);
 	read_arg(source, data);
-//	create_lvl(data);
+	default_settings(data);
 
 /*------------------------------DELETE ME----------------------------------*/
 	int i = -1;

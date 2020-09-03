@@ -2,11 +2,15 @@ GCC = gcc -Wall -Wextra -Werror
 NAME = wolf3d
 SRC_DIR = sources/
 CONTROLLERS_DIR = $(SRC_DIR)controllers/
-SRCS = $(SRC_DIR)main.c\
+SRCS =	$(SRC_DIR)main.c\
 		$(SRC_DIR)data_init.c\
 		$(SRC_DIR)error.c\
 		$(SRC_DIR)read_arg.c\
-		$(SRC_DIR)render.c
+		$(SRC_DIR)render.c\
+		$(SRC_DIR)player.c\
+		$(CONTROLLERS_DIR)controller.c\
+		$(CONTROLLERS_DIR)keyboard_controller.c\
+		$(CONTROLLERS_DIR)mouse_controller.c
 
 INC = includes/
 OBJS = $(SRCS:.c=.o)

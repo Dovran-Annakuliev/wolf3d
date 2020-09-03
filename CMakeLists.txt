@@ -154,4 +154,4 @@ add_executable(wolf3d
         libft/utility_funcs/ft_isupper.c
         libft/utility_funcs/ft_tolower.c
         libft/utility_funcs/ft_toupper.c
-        sources/main.c sources/error.c sources/data_init.c sources/read_arg.c sources/render.c)
+        sources/main.c sources/error.c sources/data_init.c sources/read_arg.c sources/render.c sources/player.c)
