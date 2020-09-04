@@ -4,15 +4,18 @@
 #ifdef __APPLE__
 # include <OpenGL/gl.h>
 # include <OpenCL/opencl.h>
+#include "../SDL2.framework/Headers/SDL.h"
+#include "../SDL2_image.framework/Headers/SDL_image.h"
 #else
-# include <GL/opengl.h>
-# include <CL/opencl.h>
+//# include <GL/opengl.h>
+//# include <CL/opencl.h>
+#include <SDL.h>
+#include <SDL_image.h>
 #endif
 
 #include "../libft/includes/libft.h"
-#include "../SDL2.framework/Headers/SDL.h"
-#include "../SDL2_image.framework/Headers/SDL_image.h"
 #include "error_codes.h"
+
 
 #include <stdio.h>
 #include <stdlib.h>
