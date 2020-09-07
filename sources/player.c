@@ -37,7 +37,8 @@ void draw_fov(t_db *data, float angle, int i)
 
 //	line = fabsf(y - data->player.y * data->map.fill + shift) / sinf(angle);
 	SDL_SetRenderDrawColor(data->sdl.renderer, 255, 0, 0, 255);
-	float line2 = data->sdl.height / (view_line * cosf(angle - data->player.pov));
+
+	float line2 = data->sdl.height / (view_line * cosf(angle - data->player.pov * (float)M_PI / 180));
 	SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - line2, i, data->sdl.height / 2 + line2);
 }
 
