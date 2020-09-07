@@ -8,9 +8,9 @@
 #include "../SDL2_image.framework/Headers/SDL_image.h"
 #else
 //# include <GL/opengl.h>
-//# include <CL/opencl.h>
-#include <SDL.h>
-#include <SDL_image.h>
+# include <CL/opencl.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #endif
 
 #include "../libft/includes/libft.h"

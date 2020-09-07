@@ -21,7 +21,7 @@ else
 	detected_OS := $(shell uname)
 endif
 ifeq ($(detected_OS),Linux)
-	LIB :=  -L libft -lft -L -lXrandr -lXrender -lXi -lXfixes -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp -lm -lOpenCL -lrt
+	LIB :=  -L libft -lft -L -lXrandr -lXrender -lXi -lXfixes -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp -lm -lOpenCL -lrt -lSDL2 -lSDL2_image
 endif
 ifeq ($(detected_OS),Darwin)  
 	LIB = -L libft -lft -framework OpenGL -framework Appkit -framework OpenCL -I SDL2.framework/Headers -F ./ -framework SDL2 -I SDL2_image.framework/Headers -F ./ -framework SDL2_image
@@ -32,7 +32,7 @@ all: $(NAME)
 sources%.o: %.c
 		$(GCC) -c $< -o $@ -I $(INC)
 
-lib: install
+lib: #install
 		make -C libft
 
 install:
@@ -46,7 +46,7 @@ clean:
 		rm -f $(OBJS)
 		make -C libft clean
 
-fclean: clean uninstall
+fclean: clean #uninstall
 		rm -f $(NAME)
 		make -C libft fclean
 
