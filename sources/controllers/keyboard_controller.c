@@ -38,5 +38,5 @@ void 		keyboard_controller(SDL_Event *event, t_db *data)
 //		event->key.keysym.sym == SDLK_s ?  data->player.y++ : 0;
 //		event->key.keysym.sym == SDLK_d ?  data->player.x++ : 0;
 	}
-	ft_printf("key_number = %d\n", event->key.keysym.sym);
+//	ft_printf("key_number = %d\n", event->key.keysym.sym);
 }

@@ -11,8 +11,10 @@ void create_background(t_db *data)
 		error(TEXTURE_LOCK_ERROR, SDL_GetError());
 	format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
 	i = -1;
-	while (++i < data->sdl.width * data->sdl.height)
+	while (++i < data->sdl.width * data->sdl.height / 2)
 		pixels[i] = SDL_MapRGBA(format, 255, 255, 255, 255);
+	while (++i < data->sdl.width * data->sdl.height)
+		pixels[i] = SDL_MapRGBA(format, 204, 204, 204, 255);
 	SDL_UnlockTexture(data->sdl.texture);
 	SDL_RenderCopy(data->sdl.renderer, data->sdl.texture, NULL, NULL);
 }
@@ -36,63 +38,29 @@ void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer)
 
 void 		update_texture(t_db *data)//, int *r)
 {
-	Uint32				*pixels;
-	SDL_PixelFormat		*format;
-	int					pitch;
-	int e;
-	int i;
-	int j;
 	int x;
 	int y;
 	int k;
 
 	create_background(data);
 
-//	if (SDL_LockTexture(data->sdl.texture, NULL, (void**)&pixels, &pitch) != 0)
-//		error(TEXTURE_LOCK_ERROR, SDL_GetError());
-//
-//	format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-//
-//
-//
-//	for (i = 0; i < data->sdl.width * data->sdl.height; i++)
-//	{
-//		pixels[i] = SDL_MapRGBA(format, 255, 255 , 255, 255);
-//	}
-//	SDL_UnlockTexture(data->sdl.texture);
-//	SDL_RenderCopy(data->sdl.renderer, data->sdl.texture, NULL, NULL);
-
-//	SDL_Rect rect;
-//	rect.h = 128;
-//	rect.w = 128;
-//	rect.x = 200;
-//	rect.y = 200;
-//	e = SDL_SetRenderDrawColor(data->sdl.renderer, 0, 0, 0, 255);
-//	ft_printf("set color err = %d\n", e);
-//	e = SDL_RenderFillRect(data->sdl.renderer, &rect);
-//	ft_printf("fill rect err = %d\n", e);
-
 	y = -1;
 	k = 0;
 	while (++y < data->map.heg)
 	{
 		x = -1;
-		k = y * data->map.rect * data->sdl.width;
+		k = y * data->map.fill * data->sdl.width;
 		while (++x < data->map.len)
 		{
 			if (data->map.cell[y * data->map.len + x].wall)
 			{
-				SDL_Rect rect = create_rect(data->map.rect, data->map.rect,
+				SDL_Rect rect = create_rect(data->map.fill, data->map.fill,
 								 k % data->sdl.width, k / data->sdl.width);
 				draw_rect(rect, (cl_float4){0, 0, 0, 255}, data->sdl.renderer);
 //				ft_printf("[%d],[%d] x = %d, y = %d, k = %d\n", y, x, rect.y, rect.x, k);
-
-
 			}
 //			ft_printf("[%d],[%d] k = %d\n", y, x, k);
-			k += data->map.rect;
-//			if (k > data->map.len * 64)
-//				k += data->sdl.width;
+			k += data->map.fill;
 		}
 	}
 

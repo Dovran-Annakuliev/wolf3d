@@ -26,7 +26,6 @@ typedef struct	s_point
 	int y;
 	int wall;
 	char status;
-	int fill;
 }				t_cell;
 
 typedef struct	s_map
@@ -34,7 +33,7 @@ typedef struct	s_map
 	t_cell	*cell;
 	int		len;
 	int		heg;
-	int		rect;
+	int		fill;
 }				t_map;
 
 typedef struct	s_plr
@@ -43,6 +42,8 @@ typedef struct	s_plr
 	int y;
 	float pov;
 	float fov;
+	int x_ms;
+	int y_ms;
 }				t_plr;
 
 typedef struct	s_sdl
