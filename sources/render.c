@@ -36,16 +36,19 @@ void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer)
 	SDL_RenderFillRect(renderer, &rect);
 }
 
-void 		update_texture(t_db *data)//, int *r)
+void draw_minimap(t_db *data)
 {
 	int x;
 	int y;
 	int k;
 
-	create_background(data);
-
 	y = -1;
 	k = 0;
+
+	SDL_SetRenderDrawColor(data->sdl.renderer, 0, 0, 255, 255);
+	SDL_Rect rect = create_rect(data->map.fill, data->map.fill, data->player.x * data->map.fill, data->player.y * data->map.fill);
+	draw_rect(rect, (cl_float4){0, 0, 255, 255}, data->sdl.renderer);
+
 	while (++y < data->map.heg)
 	{
 		x = -1;
@@ -55,15 +58,25 @@ void 		update_texture(t_db *data)//, int *r)
 			if (data->map.cell[y * data->map.len + x].wall)
 			{
 				SDL_Rect rect = create_rect(data->map.fill, data->map.fill,
-								 k % data->sdl.width, k / data->sdl.width);
+											k % data->sdl.width, k / data->sdl.width);
 				draw_rect(rect, (cl_float4){0, 0, 0, 255}, data->sdl.renderer);
 //				ft_printf("[%d],[%d] x = %d, y = %d, k = %d\n", y, x, rect.y, rect.x, k);
 			}
-//			ft_printf("[%d],[%d] k = %d\n", y, x, k);
+//			else
+//			{
+//				SDL_Rect rect = create_rect(data->map.fill, data->map.fill,
+//											k % data->sdl.width, k / data->sdl.width);
+//				draw_rect(rect, (cl_float4){255, 255, 255, 255}, data->sdl.renderer);
+////				ft_printf("[%d],[%d] x = %d, y = %d, k = %d\n", y, x, rect.y, rect.x, k);
+//			}
+////			ft_printf("[%d],[%d] k = %d\n", y, x, k);
 			k += data->map.fill;
 		}
 	}
+}
 
+void 		update_texture(t_db *data)//, int *r)
+{
 }
 
 

@@ -10,18 +10,35 @@ void draw_fov(t_db *data, float angle, int i)
 
 	view_line = 0;
 	int shift = data->map.fill / 2;
+//	while (1)
+//	{
+//		x = data->player.x * data->map.fill + view_line * cosf(angle);
+//		y = data->player.y * data->map.fill + view_line * sinf(angle);
+//		k = (int)(x / data->map.fill) + (int)(y / data->map.fill) * data->map.len;
+//		if (data->map.cell[k].wall != 0)
+//			break;
+//		view_line += 0.05f;
+//	}
 	while (1)
 	{
-		x = data->player.x * data->map.fill + view_line * cos(angle) + shift;
-		y = data->player.y * data->map.fill + view_line * sin(angle) + shift;
-		k = (int)(x / data->map.fill) + (int)(y / data->map.fill) * data->map.len;
+		x = data->player.x + view_line * cosf(angle);
+		y = data->player.y + view_line * sinf(angle);
+		k = (int)x + (int)y * data->map.len;
 		if (data->map.cell[k].wall != 0)
 			break;
 		view_line += 0.05f;
 	}
-	line = ft_abs(y - data->player.y * data->map.fill + shift) / sin(angle);
-	SDL_RenderDrawLineF(data->sdl.renderer, data->player.x * data->map.fill + shift, data->player.y * data->map.fill + shift, x, y);
-//	SDL_RenderDrawLineF(data->sdl.renderer, data->sdl.height - line, i, data->sdl.height - line, i);
+	SDL_SetRenderDrawColor(data->sdl.renderer, 0, 0, 255, 255);
+	SDL_RenderDrawLineF(data->sdl.renderer, data->player.x * data->map.fill + shift,
+					 data->player.y * data->map.fill + shift, x * data->map.fill, y * data->map.fill);
+
+//	line = sqrtf(powf((data->player.x * data->map.fill - x),(data->player.x * data->map.fill - x))
+//			  + powf((data->player.y * data->map.fill - y), (data->player.y * data->map.fill - y)));
+
+//	line = fabsf(y - data->player.y * data->map.fill + shift) / sinf(angle);
+	SDL_SetRenderDrawColor(data->sdl.renderer, 255, 0, 0, 255);
+	float line2 = data->sdl.height / (view_line * cosf(angle - data->player.pov));
+	SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - line2, i, data->sdl.height / 2 + line2);
 }
 
 void player_present(t_db *data)
@@ -30,25 +47,18 @@ void player_present(t_db *data)
 	float step;
 	float fin;
 
-	SDL_Rect rect = create_rect(data->map.fill, data->map.fill, data->player.x * data->map.fill, data->player.y * data->map.fill);
-	draw_rect(rect, (cl_float4){255, 0, 0, 255}, data->sdl.renderer);
 
-	angle = data->player.pov - data->player.fov / 2;
-	step = data->player.fov / 512;
-	fin = data->player.pov + data->player.fov / 2;
+
+	angle = (data->player.pov - data->player.fov / 2) * (float)M_PI / 180;
+	step = (data->player.fov * (float)M_PI / 180) / data->sdl.width;
+	fin = (data->player.pov + data->player.fov / 2) * (float)M_PI / 180;
 
 	int i = 0;
 	while (angle <= fin)
 	{
 		draw_fov(data, angle, i++);
-
-//		printf("angle = %f\n", angle);
 		angle += step;
 	}
-//	draw_fov(data, data->player.pov);
-//	draw_fov(data, data->player.pov - data->player.fov / 2);
-//	draw_fov(data, data->player.pov + data->player.fov / 2);
-
 //	ft_printf("pov angle = %f\n", data->player.pov);
 
 //	ft_printf("line_x = %d, line_y = %d\n", data->player.x * data->map.fill, data->player.y * data->map.fill);

@@ -17,8 +17,10 @@ int main(int ac, char **av)
 			// Render the rect to the screen
 //		res = render(data->cl, data->width, data->height);
 // draw_background
-		update_texture(data);//, res);
+		create_background(data);
+//		update_texture(data);//, res);
 		player_present(data);
+		draw_minimap(data);
 		SDL_RenderPresent(data->sdl.renderer);
 		while (SDL_PollEvent(&event))
 		{

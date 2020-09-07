@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct	s_point
 {
@@ -79,6 +80,8 @@ int				*render(t_cl *cl, int w, int h);
 void			player_present(t_db *data);
 SDL_Rect		create_rect(int h, int w, int x, int y);
 void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer);
+void draw_minimap(t_db *data);
+void create_background(t_db *data);
 
 /*
 ** ---controls---

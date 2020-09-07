@@ -24,6 +24,22 @@ void shift_d(t_db *data)
 		data->player.x++;
 }
 
+void shift_right(t_db *data)
+{
+	if (data->player.pov == 355.f)
+		data->player.pov = 0;
+	else
+		data->player.pov += 5.f;
+}
+
+void shift_left(t_db *data)
+{
+	if (data->player.pov == 0)
+		data->player.pov = 355.f;
+	else
+		data->player.pov -= 5.f;
+}
+
 void 		keyboard_controller(SDL_Event *event, t_db *data)
 {
 	if (event->type == SDL_KEYDOWN)
@@ -33,10 +49,8 @@ void 		keyboard_controller(SDL_Event *event, t_db *data)
 		event->key.keysym.sym == SDLK_s ? shift_s(data) : 0;
 		event->key.keysym.sym == SDLK_d ? shift_d(data) : 0;
 
-//		event->key.keysym.sym == SDLK_w ?  data->player.y-- : 0;
-//		event->key.keysym.sym == SDLK_a ?  data->player.x-- : 0;
-//		event->key.keysym.sym == SDLK_s ?  data->player.y++ : 0;
-//		event->key.keysym.sym == SDLK_d ?  data->player.x++ : 0;
+		event->key.keysym.sym == SDLK_RIGHT ? shift_right(data) : 0;
+		event->key.keysym.sym == SDLK_LEFT ? shift_left(data) : 0;
 	}
 //	ft_printf("key_number = %d\n", event->key.keysym.sym);
 }

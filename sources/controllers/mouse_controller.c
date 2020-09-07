@@ -2,10 +2,10 @@
 
 void x_motion_p(t_db *data, int x_w, int y_w)
 {
-	if (data->player.pov == 359.9f)
+	if (data->player.pov == 357.f)
 		data->player.pov = 0;
 	else
-		data->player.pov += 0.1f;
+		data->player.pov += 3.f;
 	data->player.x_ms = x_w;
 	if (x_w >= data->sdl.width * 0.99)
 		SDL_WarpMouseInWindow(data->sdl.window, 100, y_w);
@@ -14,9 +14,9 @@ void x_motion_p(t_db *data, int x_w, int y_w)
 void x_motion_m(t_db *data, int x_w, int y_w)
 {
 	if (data->player.pov == 0)
-		data->player.pov = 359.9f;
+		data->player.pov = 357.f;
 	else
-		data->player.pov -= 0.1f;
+		data->player.pov -= 3.f;
 	data->player.x_ms = x_w;
 	if (x_w == 0)
 		SDL_WarpMouseInWindow(data->sdl.window, data->sdl.width * 0.99 - 10, y_w);
