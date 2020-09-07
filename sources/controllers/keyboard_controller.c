@@ -26,18 +26,20 @@ void shift_right(t_db *data)
 
 void rot_right(t_db *data)
 {
-	if (data->player.pov == 355.f)
+	if (data->player.pov >= 357.f)
 		data->player.pov = 0;
 	else
-		data->player.pov += 5.f;
+		data->player.pov += 3.f;
+	ft_printf("pov = %f\n", data->player.pov);
 }
 
 void rot_left(t_db *data)
 {
-	if (data->player.pov == 0)
-		data->player.pov = 355.f;
+	if (data->player.pov <= 0)
+		data->player.pov = 357.f;
 	else
-		data->player.pov -= 5.f;
+		data->player.pov -= 3.f;
+	ft_printf("pov = %f\n", data->player.pov);
 }
 
 void shift(t_db *data, SDL_Event *event)
@@ -70,7 +72,6 @@ void shift(t_db *data, SDL_Event *event)
 		event->key.keysym.sym == SDLK_s ? shift_down(data) : 0;
 		event->key.keysym.sym == SDLK_d ? shift_right(data) : 0;
 	}
-	printf("pov = %f\n", data->player.pov);
 }
 
 void 		keyboard_controller(SDL_Event *event, t_db *data)
@@ -80,8 +81,6 @@ void 		keyboard_controller(SDL_Event *event, t_db *data)
 		if (event->key.keysym.sym == SDLK_w || event->key.keysym.sym == SDLK_a
 			|| event->key.keysym.sym == SDLK_s || event->key.keysym.sym == SDLK_d)
 			shift(data, event);
-
-
 
 		event->key.keysym.sym == SDLK_RIGHT ? rot_right(data) : 0;
 		event->key.keysym.sym == SDLK_LEFT ? rot_left(data) : 0;
