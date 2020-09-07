@@ -33,3 +33,8 @@ void 	close_wolf(t_db *data)
 	free(data);
 	data = NULL;
 }
+
+void print_rect(SDL_Rect rect)
+{
+	ft_printf("h = %d, w = %d, x = %d, y = %d\n", rect.h, rect.w, rect.x, rect.y);
+}
