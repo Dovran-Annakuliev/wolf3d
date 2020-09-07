@@ -19,7 +19,7 @@ void draw_fov(t_db *data, float angle, int i)
 //			break;
 //		view_line += 0.05f;
 //	}
-	while (1)
+	while (view_line <= 20)
 	{
 		x = data->player.x + view_line * cosf(angle);
 		y = data->player.y + view_line * sinf(angle);
@@ -29,16 +29,11 @@ void draw_fov(t_db *data, float angle, int i)
 		view_line += 0.05f;
 	}
 	SDL_SetRenderDrawColor(data->sdl.renderer, 0, 0, 255, 255);
-	SDL_RenderDrawLineF(data->sdl.renderer, data->player.x * data->map.fill + shift,
-					 data->player.y * data->map.fill + shift, x * data->map.fill, y * data->map.fill);
-
-//	line = sqrtf(powf((data->player.x * data->map.fill - x),(data->player.x * data->map.fill - x))
-//			  + powf((data->player.y * data->map.fill - y), (data->player.y * data->map.fill - y)));
-
-//	line = fabsf(y - data->player.y * data->map.fill + shift) / sinf(angle);
+	SDL_RenderDrawLineF(data->sdl.renderer, data->player.x * data->map.fill,
+					 data->player.y * data->map.fill, x * data->map.fill, y * data->map.fill);
 	SDL_SetRenderDrawColor(data->sdl.renderer, 255, 0, 0, 255);
 
-	float line2 = data->sdl.height / (view_line * cosf(angle - data->player.pov * (float)M_PI / 180));
+	float line2 = data->sdl.height / (view_line * cosf(angle - data->player.pov * (float)M_PI / 180)) / 2;
 	SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - line2, i, data->sdl.height / 2 + line2);
 }
 
