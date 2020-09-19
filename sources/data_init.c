@@ -24,7 +24,7 @@ void init_sdl(t_db *data)
 	!(data->sdl.texture) ? error(TEXTURE_LOAD_ERROR, SDL_GetError()) : 0;
 }
 
-t_db 	*data_init(char *source)//, t_db *data)
+t_db 	*data_init(char *source)
 {
 	t_db *data;
 	if (!(data = (t_db*)malloc(sizeof(t_db))))

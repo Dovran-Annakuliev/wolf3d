@@ -1,5 +1,24 @@
 #include "../includes/wolf3d.h"
 
+//rewrite to draw rectangle by yourself
+
+SDL_Rect	create_rect(int h, int w, int x, int y)
+{
+	SDL_Rect rect;
+	rect.h = h;
+	rect.w = w;
+	rect.x = x;
+	rect.y = y;
+	return (rect);
+
+}
+
+void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer)
+{
+	SDL_SetRenderDrawColor(renderer, color.x, color.y, color.z, color.w);
+	SDL_RenderFillRect(renderer, &rect);
+}
+
 void create_background(t_db *data)
 {
 	Uint32				*pixels;
@@ -19,23 +38,6 @@ void create_background(t_db *data)
 	SDL_RenderCopy(data->sdl.renderer, data->sdl.texture, NULL, NULL);
 }
 
-SDL_Rect	create_rect(int h, int w, int x, int y)
-{
-	SDL_Rect rect;
-	rect.h = h;
-	rect.w = w;
-	rect.x = x;
-	rect.y = y;
-	return (rect);
-
-}
-
-void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer)
-{
-	SDL_SetRenderDrawColor(renderer, color.x, color.y, color.z, color.w);
-	SDL_RenderFillRect(renderer, &rect);
-}
-
 void draw_minimap(t_db *data)
 {
 	int x;
@@ -43,12 +45,9 @@ void draw_minimap(t_db *data)
 	int k;
 
 	y = -1;
-	k = 0;
-
 	SDL_SetRenderDrawColor(data->sdl.renderer, 0, 0, 255, 255);
 	SDL_Rect rect = create_rect(data->map.fill, data->map.fill, data->player.x * data->map.fill, data->player.y * data->map.fill);
 	draw_rect(rect, (cl_float4){0, 0, 255, 255}, data->sdl.renderer);
-
 	while (++y < data->map.heg)
 	{
 		x = -1;
@@ -60,47 +59,8 @@ void draw_minimap(t_db *data)
 				SDL_Rect rect = create_rect(data->map.fill, data->map.fill,
 											k % data->sdl.width, k / data->sdl.width);
 				draw_rect(rect, (cl_float4){0, 0, 0, 255}, data->sdl.renderer);
-//				ft_printf("[%d],[%d] x = %d, y = %d, k = %d\n", y, x, rect.y, rect.x, k);
 			}
-//			else
-//			{
-//				SDL_Rect rect = create_rect(data->map.fill, data->map.fill,
-//											k % data->sdl.width, k / data->sdl.width);
-//				draw_rect(rect, (cl_float4){255, 255, 255, 255}, data->sdl.renderer);
-////				ft_printf("[%d],[%d] x = %d, y = %d, k = %d\n", y, x, rect.y, rect.x, k);
-//			}
-////			ft_printf("[%d],[%d] k = %d\n", y, x, k);
 			k += data->map.fill;
 		}
 	}
 }
-
-void 		update_texture(t_db *data)//, int *r)
-{
-}
-
-
-//int		*render(t_cl *cl, int w, int h)
-//{
-//	cl_mem		output_buffer;
-//	int		*res;
-//	t_sphere	s;
-//	float 		fov;
-//
-//	fov = 120.0f;
-//	s = new_sphere(new_vector3(0.0f, 0.0f, -15.0f), 10.0f, new_material(new_vector3(240, 180, 50)));
-//	if (!(res = (int*)malloc(sizeof(int) * w * h)))
-//		error(MALLOC_ERROR, "renderer malloc error");
-//	output_buffer = clCreateBuffer(cl->context, CL_MEM_WRITE_ONLY, sizeof(int) * w * h, NULL, NULL);
-//	clSetKernelArg(cl->kernel, 0, sizeof(float), &fov);
-//	clSetKernelArg(cl->kernel, 1, sizeof(t_sphere), &s);
-//	clSetKernelArg(cl->kernel, 2, sizeof(cl_mem), &output_buffer);
-//	clEnqueueNDRangeKernel(cl->queue, cl->kernel, cl->dim, NULL,
-//						   cl->global_size, NULL, 0, NULL, NULL);
-//	clFinish(cl->queue);
-//	clEnqueueReadBuffer(cl->queue, output_buffer, CL_TRUE, 0, sizeof(int) * w * h,
-//						res, 0, NULL, NULL);
-//	clFinish(cl->queue);
-//	clReleaseMemObject(output_buffer);
-//	return (res);
-//}

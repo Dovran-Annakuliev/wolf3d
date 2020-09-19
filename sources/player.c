@@ -6,19 +6,8 @@ void draw_fov(t_db *data, float angle, int i)
 	float x;
 	float y;
 	int k;
-	float line;
 
 	view_line = 0;
-	int shift = data->map.fill / 2;
-//	while (1)
-//	{
-//		x = data->player.x * data->map.fill + view_line * cosf(angle);
-//		y = data->player.y * data->map.fill + view_line * sinf(angle);
-//		k = (int)(x / data->map.fill) + (int)(y / data->map.fill) * data->map.len;
-//		if (data->map.cell[k].wall != 0)
-//			break;
-//		view_line += 0.05f;
-//	}
 	while (view_line <= 20)
 	{
 		x = data->player.x + view_line * cosf(angle);
@@ -43,8 +32,6 @@ void player_present(t_db *data)
 	float step;
 	float fin;
 
-
-
 	angle = (data->player.pov - data->player.fov / 2) * (float)M_PI / 180;
 	step = (data->player.fov * (float)M_PI / 180) / data->sdl.width;
 	fin = (data->player.pov + data->player.fov / 2) * (float)M_PI / 180;
@@ -55,10 +42,4 @@ void player_present(t_db *data)
 		draw_fov(data, angle, i++);
 		angle += step;
 	}
-//	ft_printf("pov angle = %f\n", data->player.pov);
-
-//	ft_printf("line_x = %d, line_y = %d\n", data->player.x * data->map.fill, data->player.y * data->map.fill);
-//	ft_printf("x = %d, y = %d\n", x, y);
-
-//	print_rect(rect);
 }

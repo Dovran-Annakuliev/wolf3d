@@ -56,9 +56,19 @@ typedef struct	s_sdl
 	int				height;
 }				t_sdl;
 
-typedef struct	s_cl
+typedef struct			s_cl
 {
-} t_cl;
+	cl_platform_id		platform_id;
+	cl_device_id		device_id;
+	cl_context			context;
+	cl_command_queue	queue;
+	cl_program			program;
+	cl_kernel			kernel;
+	char				**kernel_source;
+	int					count;
+	size_t				dim;
+	size_t				global_size[1];
+}						t_cl;
 
 typedef struct	s_db
 {
@@ -68,12 +78,17 @@ typedef struct	s_db
 	t_plr	player;
 }				t_db;
 
-void			error(int er, const char *message);
-void 			close_wolf(t_db *data);
+/*
+** ---init functions---
+*/
 
-t_db 			*data_init(char *source);//, t_db *data);
+t_db 			*data_init(char *source);
 void			read_arg(char *source, t_db *data);
 void			create_lvl(t_db *data);
+
+/*
+** ---rendering functions---
+*/
 
 void 			update_texture(t_db *data);
 int				*render(t_cl *cl, int w, int h);
@@ -90,6 +105,13 @@ void create_background(t_db *data);
 void					controller(SDL_Event *event, t_db *data);
 void					keyboard_controller(SDL_Event *event, t_db *data);
 void					mouse_controller(SDL_Event *event, t_db *data);
+
+/*
+** ---utils---
+*/
+
+void			error(int er, const char *message);
+void 			close_wolf(t_db *data);
 
 //del
 void print_rect(SDL_Rect rect);
