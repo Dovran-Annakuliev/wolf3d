@@ -13,7 +13,7 @@ static int	ft_strlen_split(char const *s, char c)
 	return (len);
 }
 
-static void	set_status(t_db *data, int k, char *status, int i, int j)
+static void	set_status(t_db *data, int k, char *status)
 {
 	data->map.cell[k].status = '0';
 	if (ft_strcmp(status, "1") == 0)
@@ -34,7 +34,29 @@ static void	set_status(t_db *data, int k, char *status, int i, int j)
 		else if (ft_strcmp(status, "M") == 0)
 			data->map.cell[k].status = 'M';
 		else
-			error(INVALID_MAP, NULL);
+			error(INVALID_MAP, "Are you sure about that?!");
+	}
+}
+
+static void fill_rect_map(t_db *data, char *status, int i_m, int j_m)
+{
+	int i;
+	int j;
+	int k;
+
+	i = i_m * data->map.fill;
+	while (i < (i_m + 1) * data->map.fill)
+	{
+		j = j_m * data->map.fill;
+		while (j < (j_m + 1) * data->map.fill)
+		{
+			k = i * data->map.len + j;
+			set_status(data, k, status);
+			data->map.cell[k].x = j;
+			data->map.cell[k].y = i;
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -50,9 +72,10 @@ static void	ft_split(t_db *data, char *line, int i)
 	while (array[++j])
 	{
 //		ft_printf("%s ", array[j]);
-		set_status(data, k, array[j], i, j);
-		data->map.cell[k].x = j;
-		data->map.cell[k].y = i;
+//		set_status(data, k, array[j], i, j);
+//		data->map.cell[k].x = j;
+//		data->map.cell[k].y = i;
+		fill_rect_map(data, array[j], i, j);
 		free(array[j]);
 		k++;
 	}
@@ -70,6 +93,8 @@ static void	read_size(int fd, char *line, t_db *data)
 		data->map.heg++;
 		free(line);
 	}
+	data->map.len *= data->map.fill;
+	data->map.heg *= data->map.fill;
 }
 
 void		read_arg(char *source, t_db *data)
@@ -85,8 +110,8 @@ void		read_arg(char *source, t_db *data)
 		|| ((read(fd, line, 0)) < 0))
 		error(INVALID_ARGUMENTS, NULL);
 	read_size(fd, line, data);
-	data->map.cell = (t_cell *)malloc(sizeof(t_cell)
-									  * data->map.heg * data->map.len);
+	data->map.cell = (t_cell *)malloc(sizeof(t_cell) *
+			data->map.heg * data->map.len);
 	close(fd);
 	i = -1;
 	fd = open(source, O_RDONLY);
