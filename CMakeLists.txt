@@ -1,60 +1,16 @@
 cmake_minimum_required(VERSION 3.17)
-project(wolf3d)
+project(woof3d C)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -framework OpenGL -framework AppKit -I ~/Library/Frameworks/SDL2.framework/Headers -F /Users/rfork/Library/Frameworks/ -framework SDL2 -I ~/Library/Frameworks/SDL2_image.framework/Headers -F /Users/rfork/Library/Frameworks/ -framework SDL2_image")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -framework OpenGL -framework AppKit \
+-I ~/Library/Frameworks/SDL2.framework/Headers -F /Users/ltammie/Library/Frameworks/ -framework SDL2 \
+-I ~/Library/Frameworks/SDL2_image.framework/Headers -F /Users/ltammie/Library/Frameworks/ -framework SDL2_image")
 
 include_directories(includes)
 include_directories(libft/includes)
-include_directories(SDL2.framework)
-include_directories(SDL2.framework/Headers)
-include_directories(SDL2.framework/Versions)
-include_directories(SDL2.framework/Versions/A)
-include_directories(SDL2.framework/Versions/A/Headers)
-include_directories(SDL2.framework/Versions/Current)
-include_directories(SDL2.framework/Versions/Current/Headers)
-include_directories(SDL2_image.framework)
-include_directories(SDL2_image.framework/Frameworks)
-include_directories(SDL2_image.framework/Frameworks/webp.framework)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Headers)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Headers/webp)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions/A)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions/A/Headers)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions/A/Headers/webp)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions/Current)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions/Current/Headers)
-include_directories(SDL2_image.framework/Frameworks/webp.framework/Versions/Current/Headers/webp)
-include_directories(SDL2_image.framework/Headers)
-include_directories(SDL2_image.framework/Versions)
-include_directories(SDL2_image.framework/Versions/A)
-include_directories(SDL2_image.framework/Versions/A/Frameworks)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Headers)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Headers/webp)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions/A)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions/A/Headers)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions/A/Headers/webp)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions/Current)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions/Current/Headers)
-include_directories(SDL2_image.framework/Versions/A/Frameworks/webp.framework/Versions/Current/Headers/webp)
-include_directories(SDL2_image.framework/Versions/A/Headers)
-include_directories(SDL2_image.framework/Versions/Current)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Headers)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Headers/webp)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions/A)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions/A/Headers)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions/A/Headers/webp)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions/Current)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions/Current/Headers)
-include_directories(SDL2_image.framework/Versions/Current/Frameworks/webp.framework/Versions/Current/Headers/webp)
-include_directories(SDL2_image.framework/Versions/Current/Headers)
 
-add_executable(wolf3d
+add_executable(woof3d
+        includes/error_codes.h
         includes/wolf3d.h
         libft/includes/ft_printf.h
         libft/includes/libft.h
@@ -154,4 +110,12 @@ add_executable(wolf3d
         libft/utility_funcs/ft_isupper.c
         libft/utility_funcs/ft_tolower.c
         libft/utility_funcs/ft_toupper.c
-        sources/main.c sources/error.c sources/data_init.c sources/read_arg.c sources/render.c sources/player.c)
+        sources/controllers/controller.c
+        sources/controllers/keyboard_controller.c
+        sources/controllers/mouse_controller.c
+        sources/data_init.c
+        sources/error.c
+        sources/main.c
+        sources/player.c
+        sources/read_arg.c
+        sources/render.c)
