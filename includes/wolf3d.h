@@ -21,13 +21,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-typedef struct	s_point
+typedef struct	s_cell
 {
 	int x;
 	int y;
 	int wall;
 	char status;
 }				t_cell;
+
 
 typedef struct	s_map
 {
@@ -97,6 +98,10 @@ SDL_Rect		create_rect(int h, int w, int x, int y);
 void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer);
 void draw_minimap(t_db *data);
 void create_background(t_db *data);
+
+void		intersect(int i, t_db *data, float angle);
+void		cast_rays(t_db *data);
+
 
 /*
 ** ---controls---

@@ -28,7 +28,11 @@ static void	set_status(t_db *data, int k, char *status, int i, int j)
 		else if (ft_strcmp(status, "E") == 0)
 			data->map.cell[k].status = 'E';
 		else if (ft_strcmp(status, "P") == 0)
+		{
 			data->map.cell[k].status = 'P';
+			data->player.x = j;
+			data->player.y = i;
+		}
 		else if (ft_strcmp(status, "W") == 0)
 			data->map.cell[k].status = 'W';
 		else if (ft_strcmp(status, "M") == 0)
@@ -49,8 +53,7 @@ static void	ft_split(t_db *data, char *line, int i)
 	array = ft_strsplit(line, ' ');
 	while (array[++j])
 	{
-//		ft_printf("%s ", array[j]);
-		set_status(data, k, array[j], i, j);
+		set_status(data, k, array[j], i, j); // to many arguments, sorry
 		data->map.cell[k].x = j;
 		data->map.cell[k].y = i;
 		free(array[j]);

@@ -14,7 +14,7 @@ int main(int ac, char **av)
 	{
 		SDL_RenderClear(data->sdl.renderer);
 		create_background(data);
-		player_present(data);
+		cast_rays(data);
 		draw_minimap(data);
 		SDL_RenderPresent(data->sdl.renderer);
 		while (SDL_PollEvent(&event))
