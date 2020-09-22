@@ -65,11 +65,11 @@ static float	horizontal_intersect(int i, t_db *data, float angle)
 		A.y = (data->player.y / data->map.fill) * data->map.fill - 1;
 	else
 		A.y = (data->player.y / data->map.fill) * data->map.fill + data->map.fill;
-	A.x = (int)(data->player.x + (data->player.y - A.y)/tan(angle));
+	A.x = (int)(data->player.x + (data->player.y - A.y)/tan(angle * M_PI / 180));
 	if (!check_wall(A.x / data->map.fill, A.y / data->map.fill, data))
 	{
 		X.y = is_up ? -data->map.fill : data->map.fill;
-		X.x = (int) (data->map.fill / tan(angle));
+		X.x = (int) (data->map.fill / tan(angle * M_PI / 180));
 		dist = 0;
 		while (dist < 10)
 		{
@@ -80,7 +80,7 @@ static float	horizontal_intersect(int i, t_db *data, float angle)
 			dist++;
 		}
 	}
-	return (abs(data->player.x - A.x) / cos(angle));
+	return (abs(data->player.x - A.x) / cos(angle * M_PI / 180));
 }
 
 static float		vertical_intersect(int i, t_db *data, float angle)
@@ -95,11 +95,11 @@ static float		vertical_intersect(int i, t_db *data, float angle)
 		B.x = (data->player.x / data->map.fill) * data->map.fill + data->map.fill;
 	else
 		B.x = (data->player.x / data->map.fill) * data->map.fill - 1 ;
-	B.y = (int)(data->player.y + (data->player.x - B.x)/tan(angle));
+	B.y = (int)(data->player.y + (data->player.x - B.x)/tan(angle * M_PI / 180));
 	if (!check_wall(B.x / data->map.fill, B.y / data->map.fill, data))
 	{
 		X.x = is_right ? data->map.fill : -data->map.fill;
-		X.y = (int) (data->map.fill * tan(angle));
+		X.y = (int) (data->map.fill * tan(angle * M_PI / 180));
 		dist = 0;
 		while (dist < 10)
 		{
@@ -110,17 +110,15 @@ static float		vertical_intersect(int i, t_db *data, float angle)
 			dist++;
 		}
 	}
-	return (abs(data->player.x - B.x) / cos(angle));
+	return (abs(data->player.x - B.x) / cos(angle * M_PI / 180));
 }
 
 void		cast_rays(t_db *data)
 {
-	float fov = data->player.fov;
-	float pov = data->player.pov;
-	float min = (pov - fov / 2) * M_PI / 180;
-	float max = (pov + fov / 2) * M_PI / 180;
-	float delta = fov / (float)data->sdl.width;
-	float dist_to_proj_plane = (data->sdl.width / 2) / tan(fov * M_PI / 180);
+	float min = data->player.pov - data->player.fov / 2;
+	float max = data->player.pov + data->player.fov / 2;
+	float delta = data->player.fov / (float)data->sdl.width;
+	int dist_to_proj_plane = (data->sdl.width / 2) / SDL_tanf(data->player.fov/2 * M_PI / 180);
 
 	int i = 0;
 	float horiz_dist;
@@ -133,7 +131,7 @@ void		cast_rays(t_db *data)
 		vert_dist = vertical_intersect(i, data, min);
 		res_dist = horiz_dist < vert_dist ? horiz_dist : vert_dist;
 		wall_height = data->map.fill / res_dist * dist_to_proj_plane;
-		SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - wall_height / 2, i, data->sdl.height / 2 + wall_height / 2);
+		SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - wall_height / 2, i, data->sdl.height / 2 + wall_height / 2 );
 		min += delta;
 		i++;
 	}
