@@ -60,7 +60,7 @@ static float	horizontal_intersect(int i, t_db *data, float angle)
 	t_cell A;
 	t_cell X;
 
-	is_up = data->player.pov <= 180 ? 1 : 0;
+	is_up = angle < 0 || (angle > 180 && angle < 360) ? 1 : 0;
 	if (is_up)
 		A.y = (data->player.y / data->map.fill) * data->map.fill - 1;
 	else
@@ -71,7 +71,7 @@ static float	horizontal_intersect(int i, t_db *data, float angle)
 		X.y = is_up ? -data->map.fill : data->map.fill;
 		X.x = (int) (data->map.fill / tan(angle * M_PI / 180));
 		dist = 0;
-		while (dist < 10)
+		while (dist < 20)
 		{
 			A.x = A.x + X.x;
 			A.y = A.y + X.y;
@@ -90,7 +90,7 @@ static float		vertical_intersect(int i, t_db *data, float angle)
 	t_cell B;
 	t_cell X;
 
-	is_right = data->player.pov <= 90 || data->player.pov >= 270  ? 1 : 0;
+	is_right = angle < 90 || (angle > 270 && angle < 450) ? 1 : 0;
 	if (is_right)
 		B.x = (data->player.x / data->map.fill) * data->map.fill + data->map.fill;
 	else
