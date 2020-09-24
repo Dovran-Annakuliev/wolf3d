@@ -65,6 +65,8 @@ static float	horizontal_intersect(int i, t_db *data, float angle)
 	if (angle < 0)
 		angle += 360.0f;
 	is_up = angle > 180.0f || angle < 0 ? 1 : 0;
+	if (angle == 0.0f || angle == 180.0f)
+		angle += 0.001f;
 	if (is_up)
 		A.y = (data->player.y / data->map.fill) * data->map.fill - 1;
 	else
@@ -82,7 +84,7 @@ static float	horizontal_intersect(int i, t_db *data, float angle)
 				break;
 		}
 	}
-	return (fabs(data->player.x - A.x) / cos(angle * M_PI / 180));
+	return (abs(data->player.x - A.x) / cos(angle * M_PI / 180));
 }
 
 static float		vertical_intersect(int i, t_db *data, float angle)
@@ -93,8 +95,10 @@ static float		vertical_intersect(int i, t_db *data, float angle)
 
 	angle = fmodf(angle, 360.0f);
 	if (angle < 0)
-		angle += 360.0f;
+		angle += 360.0f;§
 	is_right = angle > 270.0f || angle < 90.0f ? 1 : 0;
+	if (angle == 0.0f || angle == 180.0f)
+		angle += 0.001f;
 	if (is_right)
 		B.x = (data->player.x / data->map.fill) * data->map.fill + data->map.fill;
 	else
@@ -112,7 +116,7 @@ static float		vertical_intersect(int i, t_db *data, float angle)
 				break;
 		}
 	}
-	return (fabs(data->player.x - B.x) / cos(angle * M_PI / 180));
+	return (abs(data->player.x - B.x) / cos(angle * M_PI / 180));
 }
 
 void		cast_rays(t_db *data)
