@@ -44,7 +44,7 @@
 //	}
 //}
 
-static int		check_wall(int x, int y, t_db *data)
+static int		check_wall(int x, int y, t_db *data, float angle)
 {
 	int k;
 	k = x + y * data->map.len;
@@ -53,64 +53,66 @@ static int		check_wall(int x, int y, t_db *data)
 	return (1);
 }
 
+
+//devision by zero! if angle == 0 or 180 degress
 static float	horizontal_intersect(int i, t_db *data, float angle)
 {
 	int is_up;
-	int dist;
 	t_cell A;
 	t_cell X;
 
-	is_up = angle < 0 || (angle > 180 && angle < 360) ? 1 : 0;
+	angle = fmodf(angle, 360.0f);
+	if (angle < 0)
+		angle += 360.0f;
+	is_up = angle > 180.0f || angle < 0 ? 1 : 0;
 	if (is_up)
 		A.y = (data->player.y / data->map.fill) * data->map.fill - 1;
 	else
 		A.y = (data->player.y / data->map.fill) * data->map.fill + data->map.fill;
 	A.x = (int)(data->player.x + (data->player.y - A.y)/tan(angle * M_PI / 180));
-	if (!check_wall(A.x / data->map.fill, A.y / data->map.fill, data))
+	if (!check_wall(A.x / data->map.fill, A.y / data->map.fill, data, angle))
 	{
 		X.y = is_up ? -data->map.fill : data->map.fill;
 		X.x = (int) (data->map.fill / tan(angle * M_PI / 180));
-		dist = 0;
-		while (dist < 20)
+		while (A.x >= 0 && A.x < data->map.len && A.y >= 0 && A.y < data->map.heg)
 		{
 			A.x = A.x + X.x;
 			A.y = A.y + X.y;
-			if (check_wall(A.x / data->map.fill, A.y / data->map.fill, data))
+			if (check_wall(A.x / data->map.fill, A.y / data->map.fill, data, angle))
 				break;
-			dist++;
 		}
 	}
-	return (abs(data->player.x - A.x) / cos(angle * M_PI / 180));
+	return (fabs(data->player.x - A.x) / cos(angle * M_PI / 180));
 }
 
 static float		vertical_intersect(int i, t_db *data, float angle)
 {
 	int is_right;
-	int dist;
 	t_cell B;
 	t_cell X;
 
-	is_right = angle < 90 || (angle > 270 && angle < 450) ? 1 : 0;
+	angle = fmodf(angle, 360.0f);
+	if (angle < 0)
+		angle += 360.0f;
+	is_right = angle > 270.0f || angle < 90.0f ? 1 : 0;
 	if (is_right)
 		B.x = (data->player.x / data->map.fill) * data->map.fill + data->map.fill;
 	else
 		B.x = (data->player.x / data->map.fill) * data->map.fill - 1 ;
 	B.y = (int)(data->player.y + (data->player.x - B.x)/tan(angle * M_PI / 180));
-	if (!check_wall(B.x / data->map.fill, B.y / data->map.fill, data))
+	if (!check_wall(B.x / data->map.fill, B.y / data->map.fill, data, angle))
 	{
 		X.x = is_right ? data->map.fill : -data->map.fill;
 		X.y = (int) (data->map.fill * tan(angle * M_PI / 180));
-		dist = 0;
-		while (dist < 10)
+		while (B.x >= 0 && B.x < data->map.len && B.y >= 0 && B.y < data->map.heg)
 		{
 			B.x = B.x + X.x;
 			B.y = B.y + X.y;
-			if (check_wall(B.x / data->map.fill, B.y / data->map.fill, data))
+			if (check_wall(B.x / data->map.fill, B.y / data->map.fill, data, angle))
 				break;
-			dist++;
 		}
 	}
-	return (abs(data->player.x - B.x) / cos(angle * M_PI / 180));
+	return (fabs(data->player.x - B.x) / cos(angle * M_PI / 180));
 }
 
 void		cast_rays(t_db *data)
@@ -124,14 +126,15 @@ void		cast_rays(t_db *data)
 	float horiz_dist;
 	float vert_dist;
 	float res_dist;
-	unsigned wall_height;
+	float wall_height;
 	while (min <= max)
 	{
 		horiz_dist = horizontal_intersect(i, data, min);
 		vert_dist = vertical_intersect(i, data, min);
 		res_dist = horiz_dist < vert_dist ? horiz_dist : vert_dist;
 		wall_height = data->map.fill / res_dist * dist_to_proj_plane;
-		SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - wall_height / 2, i, data->sdl.height / 2 + wall_height / 2 );
+		SDL_RenderDrawLineF(data->sdl.renderer, i, data->sdl.height / 2 - wall_height / 2, i,
+							data->sdl.height / 2 + wall_height / 2);
 		min += delta;
 		i++;
 	}

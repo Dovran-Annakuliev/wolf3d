@@ -5,7 +5,7 @@ void default_settings(t_db *data)
 	data->map.fill = 24;
 	data->player.x = data->player.x * data->map.fill + data->map.fill / 2;
 	data->player.y = data->player.y * data->map.fill + data->map.fill / 2;
-	data->player.pov = 0.f;
+	data->player.pov = 60.f;
 	data->player.fov = 60.f;
 	SDL_GetMouseState(&data->player.x_ms, &data->player.y_ms);
 }

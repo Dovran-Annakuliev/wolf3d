@@ -10,7 +10,6 @@ SDL_Rect	create_rect(int h, int w, int x, int y)
 	rect.x = x;
 	rect.y = y;
 	return (rect);
-
 }
 
 void 	draw_rect(SDL_Rect rect, cl_float4 color, SDL_Renderer *renderer)
@@ -38,6 +37,7 @@ void create_background(t_db *data)
 	SDL_RenderCopy(data->sdl.renderer, data->sdl.texture, NULL, NULL);
 }
 
+//rewrite
 void draw_minimap(t_db *data)
 {
 	int x;
@@ -46,8 +46,8 @@ void draw_minimap(t_db *data)
 
 	y = -1;
 	SDL_SetRenderDrawColor(data->sdl.renderer, 0, 0, 255, 255);
-	SDL_Rect rect = create_rect(data->map.fill, data->map.fill, data->player.x * data->map.fill, data->player.y * data->map.fill);
-	draw_rect(rect, (cl_float4){0, 0, 255, 255}, data->sdl.renderer);
+	SDL_Rect player = create_rect(data->map.fill, data->map.fill, data->player.x - data->map.fill / 2, data->player.y - data->map.fill / 2);
+//	draw_rect(rect, (cl_float4){0, 0, 255, 255}, data->sdl.renderer);
 	while (++y < data->map.heg)
 	{
 		x = -1;
@@ -60,6 +60,8 @@ void draw_minimap(t_db *data)
 											k % data->sdl.width, k / data->sdl.width);
 				draw_rect(rect, (cl_float4){0, 0, 0, 255}, data->sdl.renderer);
 			}
+			if (data->map.cell[y * data->map.len + x].status == 'P')
+				draw_rect(player, (cl_float4){0, 0, 255, 255}, data->sdl.renderer);
 			k += data->map.fill;
 		}
 	}
