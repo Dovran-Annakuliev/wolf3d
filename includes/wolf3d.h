@@ -21,6 +21,21 @@
 #include <stdlib.h>
 #include <math.h>
 
+typedef struct			s_cl
+{
+	cl_platform_id		platform_id;
+	cl_device_id		device_id;
+	cl_context			context;
+	cl_command_queue	queue;
+	cl_program			program;
+	cl_kernel			kernel;
+	char				**kernel_source;
+	int					count;
+	size_t				dim;
+	size_t				global_size[1];
+	char				*cl_path;
+}						t_cl;
+
 typedef struct	s_point
 {
 	int x;
@@ -56,10 +71,6 @@ typedef struct	s_sdl
 	int				height;
 }				t_sdl;
 
-typedef struct	s_cl
-{
-} t_cl;
-
 typedef struct	s_db
 {
 	t_map	map;
@@ -67,6 +78,10 @@ typedef struct	s_db
 	t_cl	cl;
 	t_plr	player;
 }				t_db;
+
+void			cl_init(t_cl *cl, int width, int height);
+void			cl_free(t_cl *cl);
+char			**get_kernel_source(t_cl *cl, char *path);
 
 void			error(int er, const char *message);
 void 			close_wolf(t_db *data);

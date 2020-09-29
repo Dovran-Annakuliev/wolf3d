@@ -30,6 +30,7 @@ void 	close_wolf(t_db *data)
 	SDL_DestroyRenderer(data->sdl.renderer);
 	SDL_DestroyWindow(data->sdl.window);
 	SDL_Quit();
+	free(data->map.cell);
 	free(data);
 	data = NULL;
 }

@@ -8,6 +8,7 @@ void default_settings(t_db *data)
 	data->player.pov = 0.f;
 	data->player.fov = 60.f;
 	SDL_GetMouseState(&data->player.x_ms, &data->player.y_ms);
+	data->cl.cl_path = "kernels/wolf.cl";
 }
 
 void init_sdl(t_db *data)
@@ -24,7 +25,7 @@ void init_sdl(t_db *data)
 	!(data->sdl.texture) ? error(TEXTURE_LOAD_ERROR, SDL_GetError()) : 0;
 }
 
-t_db 	*data_init(char *source)//, t_db *data)
+t_db 	*data_init(char *source)
 {
 	t_db *data;
 	if (!(data = (t_db*)malloc(sizeof(t_db))))
@@ -32,6 +33,8 @@ t_db 	*data_init(char *source)//, t_db *data)
 	init_sdl(data);
 	read_arg(source, data);
 	default_settings(data);
+//	data->cl.kernel_source = get_kernel_source(&data->cl, data->cl.cl_path);
+//	cl_init(&data->cl, data->sdl.width, data->sdl.height);
 
 /*------------------------------DELETE ME----------------------------------*/
 	int i = -1;
