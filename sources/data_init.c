@@ -3,11 +3,13 @@
 void default_settings(t_db *data)
 {
 	data->map.fill = 24;
-	data->player.x = 1;
-	data->player.y = 1;
-	data->player.pov = 0.f;
-	data->player.fov = 60.f;
-	SDL_GetMouseState(&data->player.x_ms, &data->player.y_ms);
+	data->player.posX = 22;
+	data->player.posY = 12;
+	data->player.dirX = -1;
+	data->player.dirY = 0;
+	data->player.planeX = 0;
+	data->player.planeY = 0.66;
+//	SDL_GetMouseState(&data->player.x_ms, &data->player.y_ms);
 	data->cl.cl_path = "kernels/wolf.cl";
 }
 

@@ -56,10 +56,12 @@ typedef struct	s_plr
 {
 	int x;
 	int y;
-	float pov;
-	float fov;
-	int x_ms;
-	int y_ms;
+	float posX;
+	float posY;
+	float dirX;
+	float dirY;
+	float planeX;
+	float planeY;
 }				t_plr;
 
 typedef struct	s_sdl

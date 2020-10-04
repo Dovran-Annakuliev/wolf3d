@@ -92,26 +92,26 @@ void player_present(t_db *data)
 //	double dirX = 1, dirY = 0;
 //	double planeX = 0, planeY = 0.66;
 
-	double posX = 22, posY = 12;  //x and y start position
-	double dirX = -1, dirY = 0; //initial direction vector
-	double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+	float posX = data->player.posX, posY = data->player.posY;  //x and y start position
+	float dirX = data->player.dirX, dirY = data->player.dirY; //initial direction vector
+	float planeX = data->player.planeX, planeY = data->player.planeY; //the 2d raycaster version of camera plane
 
 	for(int x = 0; x < w; x++)
 	{
-		double cameraX = 2 * x / (double) w - 1; //x-coordinate in camera space
-		double rayDirX = dirX + planeX * cameraX;
-		double rayDirY = dirY + planeY * cameraX;
+		float cameraX = 2 * x / (float) w - 1; //x-coordinate in camera space
+		float rayDirX = dirX + planeX * cameraX;
+		float rayDirY = dirY + planeY * cameraX;
 		//which box of the map we're in
 		int mapX = (int)posX;
 		int mapY = (int)posY;
 
 		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
+		float sideDistX;
+		float sideDistY;
 
-		double deltaDistX = (rayDirY == 0) ? 0 : ((rayDirX == 0) ? 1 : fabs(1 / rayDirX));
-		double deltaDistY = (rayDirX == 0) ? 0 : ((rayDirY == 0) ? 1 : fabs(1 / rayDirY));
-		double perpWallDist;
+		float deltaDistX = (rayDirY == 0) ? 0 : ((rayDirX == 0) ? 1 : fabs(1 / rayDirX));
+		float deltaDistY = (rayDirX == 0) ? 0 : ((rayDirY == 0) ? 1 : fabs(1 / rayDirY));
+		float perpWallDist;
 
 		//what direction to step in x or y-direction (either +1 or -1)
 		int stepX;
