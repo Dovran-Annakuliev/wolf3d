@@ -88,13 +88,13 @@ void player_present(t_db *data)
 	int w = data->sdl.width;
 	int h = data->sdl.height;
 
-	double posX = 1.5 * data->map.fill, posY = 1.5 * data->map.fill;
-	double dirX = 1, dirY = 0;
-	double planeX = 0, planeY = 0.66;
-//
-//	double posX = 22, posY = 12;  //x and y start position
-//	double dirX = -1, dirY = 0; //initial direction vector
-//	double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+//	double posX = 1.5 * data->map.fill, posY = 1.5 * data->map.fill;
+//	double dirX = 1, dirY = 0;
+//	double planeX = 0, planeY = 0.66;
+
+	double posX = 22, posY = 12;  //x and y start position
+	double dirX = -1, dirY = 0; //initial direction vector
+	double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
 
 	for(int x = 0; x < w; x++)
 	{
@@ -102,8 +102,8 @@ void player_present(t_db *data)
 		double rayDirX = dirX + planeX * cameraX;
 		double rayDirY = dirY + planeY * cameraX;
 		//which box of the map we're in
-		int mapX = (int)posX / data->map.fill;
-		int mapY = (int)posY / data->map.fill;
+		int mapX = (int)posX;
+		int mapY = (int)posY;
 
 		//length of ray from current position to next x or y-side
 		double sideDistX;
@@ -139,7 +139,7 @@ void player_present(t_db *data)
 			sideDistY = (mapY + 1.0 - posY) * deltaDistY;
 		}
 		//perform DDA
-		while (hit == 0)
+		while (hit < 5)
 		{
 			//jump to next map square, OR in x-direction, OR in y-direction
 			if (sideDistX < sideDistY)
@@ -147,7 +147,8 @@ void player_present(t_db *data)
 				sideDistX += deltaDistX;
 				mapX += stepX;
 				side = 0;
-			} else
+			}
+			else
 			{
 				sideDistY += deltaDistY;
 				mapY += stepY;
@@ -155,7 +156,8 @@ void player_present(t_db *data)
 			}
 			//Check if ray has hit a wall
 			if (data->map.cell[mapY * data->map.len + mapX].wall == 1)
-				hit = 1;
+				break;
+			hit++;
 		}
 		//Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
 		if (side == 0)
